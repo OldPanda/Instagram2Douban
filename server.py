@@ -11,8 +11,13 @@ from utils.DoubanLoginAuth import DoubanOAuth2Mixin
 from utils import tools
 from tornado.options import define, options
 from uuid import uuid4
+<<<<<<< HEAD:server.py
 from functools import partial
 from sync_server import sync_img
+=======
+from sync_server import sync_img
+import functools
+>>>>>>> 972593b1217c5f963812a40e2a2f0c6456b0ae22:Ins2Douban.py
 
 define("port", default=8080, help="run on the given port", type=int)
 
@@ -112,11 +117,17 @@ def main():
     tornado.options.parse_command_line()
     http_server = tornado.httpserver.HTTPServer(Application(db))
     http_server.listen(options.port, address="0.0.0.0")
+<<<<<<< HEAD:server.py
     sync_server = tornado.ioloop.PeriodicCallback(
         partial(sync_img, db),
         15000
     ) # 15 seconds
     sync_server.start()
+=======
+    sync_server = tornado.ioloop.PeriodicCallback(functools.partial(sync_img, db), 12000) # 5 min (300000 ms)
+    sync_server.start()
+
+>>>>>>> 972593b1217c5f963812a40e2a2f0c6456b0ae22:Ins2Douban.py
     tornado.ioloop.IOLoop.instance().start()
 
 

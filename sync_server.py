@@ -5,9 +5,13 @@ import json
 from functools import partial
 from pymongo import MongoClient
 from utils import MultipartPostHandler
+<<<<<<< HEAD
 import logging
 
 
+=======
+from functools import partial
+>>>>>>> 972593b1217c5f963812a40e2a2f0c6456b0ae22
 INSTAGRAM_URL = 'https://api.instagram.com/v1/'
 DOUBAN_URL = 'https://api.douban.com/'
 
@@ -77,6 +81,7 @@ def sync_img(db):
         fetch_pic_and_upload(user, users)
 
 
+<<<<<<< HEAD
 def main():
     logging.basicConfig(format='[%(asctime)s] %(message)s',
                         datefmt='%m/%d/%Y %I:%M:%S %p',
@@ -90,6 +95,16 @@ def main():
     sync_server.start()
     ioloop.start()
 
+=======
+>>>>>>> 972593b1217c5f963812a40e2a2f0c6456b0ae22
 
-if __name__ == '__main__':
-    main()
+# def main():
+#     conn = MongoClient('mongodb://localhost:27017/')
+#     db = conn["insdouban"]
+#     # sync_server = tornado.ioloop.PeriodicCallback(partial(sync_img, db), 12000) # 5 min (300000 ms)
+#     sync_server = tornado.ioloop.PeriodicCallback(partial(sync_img, db), 1000) # 5 min (300000 ms)
+#     sync_server.start()
+#     tornado.ioloop.IOLoop.instance().start()
+#
+# if __name__ == '__main__':
+#     main()
