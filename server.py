@@ -98,6 +98,10 @@ def add_user(db, user_info):
     """
     new_user = tools.oauth_data_to_doc(user_info)
     db.users.update({"douban.uid": new_user["douban"]["uid"]}, new_user, upsert=True)
+    logging.info("Saved user Douban: [{douban}], Instagram: [{instagram}]".format(
+            douban=new_user["douban"]["uid"],
+            instagram=new_user["instagram"]["username"]
+        ))
 
 
 def main():

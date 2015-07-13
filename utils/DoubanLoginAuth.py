@@ -23,7 +23,6 @@ class DoubanMixin(object):
         }
         if scope:
             args['scope'] = ' '.join(scope)
-        print "what's wrong"
         self.redirect(
             tornado.httputil.url_concat(self._OAUTH_AUTHORIZE_URL, args))   #跳转到认证页面
         callback()
