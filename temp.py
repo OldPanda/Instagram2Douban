@@ -20,8 +20,7 @@ from tornado.options import define, options
 from tornado import httpclient, gen, ioloop
 
 define("port", default=8080, help="run on the given port", type=int)
-def func():
-    print "hello", time.ctime()
+
 
 class HomeHandler(tornado.web.RequestHandler):
     def get(self):

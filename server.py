@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import os
+import logging
 import tornado.web
 import tornado.gen
 import tornado.httpserver
@@ -10,7 +11,8 @@ from utils.DoubanLoginAuth import DoubanOAuth2Mixin
 from utils import tools
 from tornado.options import define, options
 from uuid import uuid4
-# from sync_server import sync_img
+from functools import partial
+from sync_server import sync_img
 
 define("port", default=8080, help="run on the given port", type=int)
 
@@ -99,14 +101,22 @@ def add_user(db, user_info):
 
 
 def main():
+    logging.basicConfig(format='[%(asctime)s] %(message)s',
+                        datefmt='%m/%d/%Y %I:%M:%S %p',
+                        filename='sync_server_log.txt',
+                        filemode='wb',
+                        level=logging.NOTSET)
     conn = MongoClient('mongodb://localhost:27017/')
+    logging.info("MongoDB connection succeed")
     db = conn["insdouban"]
     tornado.options.parse_command_line()
     http_server = tornado.httpserver.HTTPServer(Application(db))
     http_server.listen(options.port, address="0.0.0.0")
-    # sync_server = tornado.ioloop.PeriodicCallback(sync_img(db), 9000) # 5 min (300000 ms)
-    # sync_server.start()
-
+    sync_server = tornado.ioloop.PeriodicCallback(
+        partial(sync_img, db),
+        15000
+    ) # 15 seconds
+    sync_server.start()
     tornado.ioloop.IOLoop.instance().start()
 
 
