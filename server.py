@@ -64,7 +64,8 @@ class HomeHandler(tornado.web.RequestHandler):
 
     def get(self):
         # self.set_secure_cookie("user_id", "ilovewilbeibi~~~")
-        self.write("Auth Success " + "Success" + "!")
+        # self.write("Auth Success " + "Success" + "!")
+        self.render("index.html")
 
 class Application(tornado.web.Application):
 
