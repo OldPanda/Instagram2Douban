@@ -68,6 +68,6 @@ class InstagramOAuth2Mixin(InstagramMixin):
         args = escape.json_decode(response.body)
         """ args like:
         {u'access_token': u'546320656.0a0fd5f.88cf1c03db6545dfb2bdff073c4634e7', u'user': {u'username': u'wilbeibi', u'bio': u'\u5b66\u6587\u672a\u9042\uff0c\u6ca6\u4e3a\u7a0b\u5e8f\u5458\u3002', u'website': u'http://wilbeibi.com', u'profile_picture': u'https://igcdn-photos-h-a.akamaihd.net/hphotos-ak-xaf1/t51.2885-19/11377560_103249270014943_903055879_a.jpg', u'full_name': u'Hongyi Shen', u'id': u'546320656'}}
-
         """
         future.set_result(args)
+        # self.redirect("http://iubcoder.com")  # this is the final step of auth
