@@ -108,7 +108,7 @@ def add_user(db, user_info):
 def main():
     logging.basicConfig(format='[%(asctime)s] %(message)s',
                         datefmt='%m/%d/%Y %I:%M:%S %p',
-                        filename='sync_server_log.txt',
+                        filename='server_log.log',
                         filemode='wb',
                         level=logging.NOTSET)
     conn = MongoClient('mongodb://localhost:27017/')
