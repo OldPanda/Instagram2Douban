@@ -63,8 +63,6 @@ class InstagramAuthHandler(InstagramOAuth2Mixin, tornado.web.RequestHandler):
 class HomeHandler(tornado.web.RequestHandler):
 
     def get(self):
-        # self.set_secure_cookie("user_id", "ilovewilbeibi~~~")
-        # self.write("Auth Success " + "Success" + "!")
         self.render("index.html")
 
 class Application(tornado.web.Application):
@@ -76,7 +74,7 @@ class Application(tornado.web.Application):
             (r"/auth/instagram", InstagramAuthHandler),
             ]
         settings = dict(
-            template_path = os.path.join(os.path.dirname(__file__), "templates"),
+            template_path=os.path.join(os.path.dirname(__file__), "templates"),
             static_path=os.path.join(os.path.dirname(__file__), "static"),
             instagram_client_id="0a0fd5f2726a4d9387b5e827a65a169d",
             instagram_client_secret="3f374090b5f941c6b0c0b6a489120a6e",
@@ -116,7 +114,7 @@ def main():
     db = conn["insdouban"]
     tornado.options.parse_command_line()
     http_server = tornado.httpserver.HTTPServer(Application(db))
-    http_server.listen(options.port, address="0.0.0.0")
+    http_server.listen(options.port)
     sync_server = tornado.ioloop.PeriodicCallback(
         partial(sync_img, db),
         15000
