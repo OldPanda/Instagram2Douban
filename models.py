@@ -1,6 +1,7 @@
-
 from tornado import gen
 import time
+
+
 class User(object):
     """ User entry schema
     sample data:
@@ -28,7 +29,7 @@ class User(object):
       "last_sync_time": string (unix timestamp)
     }
     """
-    def __init__ (self, douban_user, instagram_user):
+    def __init__(self, douban_user, instagram_user):
         self.douban_user = douban_user
         self.instagram_user = instagram_user
         self.last_sync_time = int(time.time())

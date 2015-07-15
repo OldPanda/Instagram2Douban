@@ -51,22 +51,22 @@ class InstagramAuthHandler(InstagramOAuth2Mixin, tornado.web.RequestHandler):
                 self.application.user_info["instagram"] = token
                 self.set_secure_cookie("instagram", str(uuid4()))
                 add_user(self.application.db, self.application.user_info)
-                #self.redirect(self.get_argument("next", "/"))
                 self.redirect("/")
         else:
             yield self.authorize_redirect(
                 redirect_uri=self.settings['instagram_redirect_uri'],
                 client_id=self.settings['instagram_client_id'],
-                scope=None, # used default scope
+                scope=None,  # used default scope
                 response_type='code'
             )
-class HomeHandler(tornado.web.RequestHandler):
 
+
+class HomeHandler(tornado.web.RequestHandler):
     def get(self):
         self.render("index.html")
 
-class Application(tornado.web.Application):
 
+class Application(tornado.web.Application):
     def __init__(self, db):
         handlers = [
             (r"/", HomeHandler),
@@ -83,7 +83,6 @@ class Application(tornado.web.Application):
             douban_api_secret="74876e47a6d9e46a",
             douban_redirect_uri="http://ins2douban.com/auth/douban",
             cookie_secret=str(uuid4()),
-            #cookie_secret="FILL IN YOUR COOKIE SEC1234567890",
             xsrf_cookies=True,
             debug=True,
             )
@@ -92,15 +91,18 @@ class Application(tornado.web.Application):
         self.user_info = {}
         tornado.web.Application.__init__(self, handlers, **settings)
 
+
 def add_user(db, user_info):
     """ add user to database
     """
     new_user = tools.oauth_data_to_doc(user_info)
-    db.users.update({"douban.uid": new_user["douban"]["uid"]}, new_user, upsert=True)
-    logging.info("Saved user Douban: [{douban}], Instagram: [{instagram}]".format(
-            douban=new_user["douban"]["uid"],
-            instagram=new_user["instagram"]["username"]
-        ))
+    db.users.update({"douban.uid": new_user["douban"]["uid"]},
+                    new_user, upsert=True)
+    logging.info("Saved user Douban: [{douban}], Instagram: [{instagram}]"
+                 .format(
+                    douban=new_user["douban"]["uid"],
+                    instagram=new_user["instagram"]["username"]
+                 ))
 
 
 def main():
@@ -118,7 +120,7 @@ def main():
     sync_server = tornado.ioloop.PeriodicCallback(
         partial(sync_img, db),
         15000
-    ) # 15 seconds
+    )  # 15 seconds
     sync_server.start()
     tornado.ioloop.IOLoop.instance().start()
 

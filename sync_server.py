@@ -1,6 +1,7 @@
 import tornado.ioloop
 import time
-import urllib, urllib2
+import urllib
+import urllib2
 import json
 from functools import partial
 from pymongo import MongoClient
@@ -44,7 +45,8 @@ def fetch_pic_and_upload(user, users):
     for pic_info in reversed(inst_response["data"]):
         pic_url = pic_info["images"]["standard_resolution"]["url"]
         caption = pic_info["caption"]
-        pic_caption = caption["text"] + "  via Ins2Douban" if caption else "via Ins2Douban"
+        pic_caption = caption["text"] + "  via Ins2Douban" if caption \
+            else "via Ins2Douban"
         upload_pic_to_douban(user, pic_url, pic_caption)
 
 
@@ -90,6 +92,9 @@ def main():
     conn = MongoClient('mongodb://localhost:27017/')
     db = conn["insdouban"]
     ioloop = tornado.ioloop.IOLoop.instance()
-    sync_server = tornado.ioloop.PeriodicCallback(partial(sync_img, db), 15000) # 15s
+    sync_server = tornado.ioloop.PeriodicCallback(
+        partial(sync_img, db),
+        15000
+        )  # 15s
     sync_server.start()
     ioloop.start()

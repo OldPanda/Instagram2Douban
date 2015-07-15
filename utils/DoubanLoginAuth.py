@@ -24,7 +24,7 @@ class DoubanMixin(object):
         if scope:
             args['scope'] = ' '.join(scope)
         self.redirect(
-            tornado.httputil.url_concat(self._OAUTH_AUTHORIZE_URL, args))   #跳转到认证页面
+            tornado.httputil.url_concat(self._OAUTH_AUTHORIZE_URL, args))
         callback()
 
     def _oauth_request_token_url(self, redirect_uri=None, client_id=None, client_secret=None, code=None):
