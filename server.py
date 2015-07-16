@@ -56,6 +56,7 @@ class InstagramAuthHandler(InstagramOAuth2Mixin, tornado.web.RequestHandler):
                 self.redirect("/")
             if token and unlink:
                 del_user(self.application.db, token)
+                self.clear_cookie("unlink")
                 self.redirect("/")
         else:
             yield self.authorize_redirect(
