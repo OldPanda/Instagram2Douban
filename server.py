@@ -54,9 +54,9 @@ class InstagramAuthHandler(InstagramOAuth2Mixin, tornado.web.RequestHandler):
                 # self.set_secure_cookie("instagram", str(uuid4()))
                 add_user(self.application.db, self.application.user_info)
                 self.redirect("/")
-            if token and unlink:
+            if token and unlink == "Hello":
+                self.clear_all_cookies()
                 del_user(self.application.db, token)
-                self.clear_cookie("unlink")
                 self.redirect("/")
         else:
             yield self.authorize_redirect(
