@@ -21,6 +21,7 @@ define("port", default=8080, help="run on the given port", type=int)
 class DoubanAuthHandler(DoubanOAuth2Mixin, tornado.web.RequestHandler):
     @tornado.gen.coroutine
     def get(self):
+        self.clear_all_cookies()
         if self.get_argument('code', False):
             token = yield self.get_authenticated_user(
                 redirect_uri=self.settings['douban_redirect_uri'],
