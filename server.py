@@ -28,7 +28,7 @@ class DoubanAuthHandler(DoubanOAuth2Mixin, tornado.web.RequestHandler):
             )
             if token:
                 self.application.user_info["douban"] = token
-                self.set_secure_cookie("douban", str(uuid4()))
+                # self.set_secure_cookie("douban", str(uuid4()))
                 self.redirect("/auth/instagram")
         else:
             yield self.authorize_redirect(
@@ -43,14 +43,19 @@ class InstagramAuthHandler(InstagramOAuth2Mixin, tornado.web.RequestHandler):
     @tornado.gen.coroutine
     def get(self):
         if self.get_argument('code', False):
+            unlink = self.get_secure_cookie("unlink", None)
+            code = self.get_argument('code')
             token = yield self.get_authenticated_user(
                 redirect_uri=self.settings['instagram_redirect_uri'],
                 code=self.get_argument('code')
             )
-            if token:
+            if token and not unlink:
                 self.application.user_info["instagram"] = token
-                self.set_secure_cookie("instagram", str(uuid4()))
+                # self.set_secure_cookie("instagram", str(uuid4()))
                 add_user(self.application.db, self.application.user_info)
+                self.redirect("/")
+            if token and unlink:
+                del_user(self.application.db, token)
                 self.redirect("/")
         else:
             yield self.authorize_redirect(
@@ -66,12 +71,25 @@ class HomeHandler(tornado.web.RequestHandler):
         self.render("index.html")
 
 
+class UnlinkHandler(InstagramOAuth2Mixin, tornado.web.RequestHandler):
+    @tornado.gen.coroutine
+    def get(self):
+        self.set_secure_cookie("unlink", "Hello")
+        yield self.authorize_redirect(
+            redirect_uri=self.settings['instagram_redirect_uri'],
+            client_id=self.settings['instagram_client_id'],
+            scope=None,  # used default scope
+            response_type='code'
+        )
+
+
 class Application(tornado.web.Application):
     def __init__(self, db):
         handlers = [
             (r"/", HomeHandler),
             (r"/auth/douban", DoubanAuthHandler),
             (r"/auth/instagram", InstagramAuthHandler),
+            (r"/unlink", UnlinkHandler)
             ]
         settings = dict(
             template_path=os.path.join(os.path.dirname(__file__), "templates"),
@@ -103,6 +121,13 @@ def add_user(db, user_info):
                     douban=new_user["douban"]["uid"],
                     instagram=new_user["instagram"]["username"]
                  ))
+
+
+def del_user(db, user_info):
+    """delete user from database
+    """
+    inst_id = user_info['user']['id']
+    db["users"].remove({"instagram.id": inst_id})
 
 
 def main():
