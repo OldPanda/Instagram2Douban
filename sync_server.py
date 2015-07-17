@@ -70,7 +70,7 @@ def upload_pic_to_douban(user, pic_url, caption):
         opener.open(url, params)
         logging.info("Uploaded picture to " + url + " succeed")
     except:
-        logging.error("Uploading picture failed: " + url + " open error")
+        logging.error("Uploading picture failed: " + pic_url + " open error")
 
 
 def sync_img(db):
