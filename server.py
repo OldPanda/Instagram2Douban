@@ -5,6 +5,7 @@ import tornado.web
 import tornado.gen
 import tornado.httpserver
 import tornado.ioloop
+import base64
 from pymongo import MongoClient
 from utils.InstagramLoginAuth import InstagramOAuth2Mixin
 from utils.DoubanLoginAuth import DoubanOAuth2Mixin
@@ -75,6 +76,7 @@ class HomeHandler(tornado.web.RequestHandler):
         else:
             message = None
         self.clear_all_cookies()
+        self.application.user_info = {}
         self.render("index.html", message=message)
 
 
@@ -107,8 +109,8 @@ class Application(tornado.web.Application):
             douban_api_key="087d1fa8c7b0696519775efa57113c2f",
             douban_api_secret="74876e47a6d9e46a",
             douban_redirect_uri="http://ins2douban.com/auth/douban",
-            cookie_secret=str(uuid4()),
-            xsrf_cookies=True,
+            cookie_secret=str(base64.b64encode(uuid.uuid4().bytes + uuid.uuid4().bytes)),
+            # xsrf_cookies=True,
             debug=True,
             )
 
