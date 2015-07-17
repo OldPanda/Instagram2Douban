@@ -134,7 +134,7 @@ def del_user(db, user_info):
 def main():
     logging.basicConfig(format='[%(asctime)s] %(message)s',
                         datefmt='%m/%d/%Y %I:%M:%S %p',
-                        filename='server_log.log',
+                        filename='server_log',
                         filemode='wb',
                         level=logging.NOTSET)
     conn = MongoClient('mongodb://localhost:27017/')
