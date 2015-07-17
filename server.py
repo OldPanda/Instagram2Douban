@@ -68,8 +68,14 @@ class InstagramAuthHandler(InstagramOAuth2Mixin, tornado.web.RequestHandler):
 
 class HomeHandler(tornado.web.RequestHandler):
     def get(self):
+        if self.get_secure_cookie("unlink"):
+            message = "Unlink succeed! "
+        elif self.get_argument("auth_succeed"):
+            message = "Link succeed! "
+        else:
+            message = None
         self.clear_all_cookies()
-        self.render("index.html")
+        self.render("index.html", message=message)
 
 
 class UnlinkHandler(InstagramOAuth2Mixin, tornado.web.RequestHandler):
