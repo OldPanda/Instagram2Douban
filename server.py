@@ -109,7 +109,7 @@ class Application(tornado.web.Application):
             douban_api_key="087d1fa8c7b0696519775efa57113c2f",
             douban_api_secret="74876e47a6d9e46a",
             douban_redirect_uri="http://ins2douban.com/auth/douban",
-            cookie_secret=str(base64.b64encode(uuid.uuid4().bytes + uuid.uuid4().bytes)),
+            cookie_secret=str(base64.b64encode(uuid4().bytes + uuid4().bytes)),
             # xsrf_cookies=True,
             debug=True,
             )
