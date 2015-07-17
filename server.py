@@ -21,7 +21,6 @@ define("port", default=8080, help="run on the given port", type=int)
 class DoubanAuthHandler(DoubanOAuth2Mixin, tornado.web.RequestHandler):
     @tornado.gen.coroutine
     def get(self):
-        self.clear_all_cookies()
         if self.get_argument('code', False):
             token = yield self.get_authenticated_user(
                 redirect_uri=self.settings['douban_redirect_uri'],
@@ -55,8 +54,7 @@ class InstagramAuthHandler(InstagramOAuth2Mixin, tornado.web.RequestHandler):
                 # self.set_secure_cookie("instagram", str(uuid4()))
                 add_user(self.application.db, self.application.user_info)
                 self.redirect("/")
-            if token and unlink == "Hello":
-                self.clear_all_cookies()
+            elif token:
                 del_user(self.application.db, token)
                 self.redirect("/")
         else:
@@ -70,13 +68,14 @@ class InstagramAuthHandler(InstagramOAuth2Mixin, tornado.web.RequestHandler):
 
 class HomeHandler(tornado.web.RequestHandler):
     def get(self):
+        self.clear_all_cookies()
         self.render("index.html")
 
 
 class UnlinkHandler(InstagramOAuth2Mixin, tornado.web.RequestHandler):
     @tornado.gen.coroutine
     def get(self):
-        self.set_secure_cookie("unlink", "Hello")
+        self.set_secure_cookie("unlink", str(uuid4()))
         yield self.authorize_redirect(
             redirect_uri=self.settings['instagram_redirect_uri'],
             client_id=self.settings['instagram_client_id'],
