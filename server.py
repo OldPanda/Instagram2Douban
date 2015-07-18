@@ -6,6 +6,7 @@ import tornado.gen
 import tornado.httpserver
 import tornado.ioloop
 import base64
+import yaml
 from pymongo import MongoClient
 from utils.InstagramLoginAuth import InstagramOAuth2Mixin
 from utils.DoubanLoginAuth import DoubanOAuth2Mixin
@@ -17,7 +18,7 @@ from sync_server import sync_img
 
 
 define("port", default=8080, help="run on the given port", type=int)
-
+define("test", default=False, help="Turn on autoreload and log to stderr", type=bool)
 
 class DoubanAuthHandler(DoubanOAuth2Mixin, tornado.web.RequestHandler):
     @tornado.gen.coroutine
@@ -93,7 +94,7 @@ class UnlinkHandler(InstagramOAuth2Mixin, tornado.web.RequestHandler):
 
 
 class Application(tornado.web.Application):
-    def __init__(self, db):
+    def __init__(self, db, conf):
         handlers = [
             (r"/", HomeHandler),
             (r"/auth/douban", DoubanAuthHandler),
@@ -101,17 +102,17 @@ class Application(tornado.web.Application):
             (r"/unlink", UnlinkHandler)
             ]
         settings = dict(
-            template_path=os.path.join(os.path.dirname(__file__), "templates"),
-            static_path=os.path.join(os.path.dirname(__file__), "static"),
-            instagram_client_id="0a0fd5f2726a4d9387b5e827a65a169d",
-            instagram_client_secret="3f374090b5f941c6b0c0b6a489120a6e",
-            instagram_redirect_uri="http://ins2douban.com/auth/instagram",
-            douban_api_key="087d1fa8c7b0696519775efa57113c2f",
-            douban_api_secret="74876e47a6d9e46a",
-            douban_redirect_uri="http://ins2douban.com/auth/douban",
-            cookie_secret=str(base64.b64encode(uuid4().bytes + uuid4().bytes)),
-            # xsrf_cookies=True,
-            debug=True,
+            template_path = os.path.join(os.path.dirname(__file__), "templates"),
+            static_path = os.path.join(os.path.dirname(__file__), "static"),
+            instagram_client_id = conf["instagram_client_id"],
+            instagram_client_secret = conf["instagram_client_secret"],
+            instagram_redirect_uri = conf["instagram_redirect_uri"],
+            douban_api_key = conf["douban_api_key"],
+            douban_api_secret = conf["douban_api_secret"],
+            douban_redirect_uri = conf["douban_redirect_uri"],
+            cookie_secret = str(base64.b64encode(uuid4().bytes + uuid4().bytes)),
+            # xsrf_cookies = True,
+            debug = True,
             )
 
         self.db = db
@@ -149,11 +150,17 @@ def main():
     logging.info("MongoDB connection succeed")
     db = conn["insdouban"]
     tornado.options.parse_command_line()
-    http_server = tornado.httpserver.HTTPServer(Application(db))
+    config = yaml.load(file("config.yaml", "r"))
+    if options.test:
+        conf = config["TEST"]
+    else:
+        conf = config["PRODUCTION"]
+    http_server = tornado.httpserver.HTTPServer(Application(db, conf))
     http_server.listen(options.port)
     sync_server = tornado.ioloop.PeriodicCallback(
         partial(sync_img, db),
-        180000
+        #180000
+        conf["PERIOD"]
     )  # 3 min
     sync_server.start()
     tornado.ioloop.IOLoop.instance().start()

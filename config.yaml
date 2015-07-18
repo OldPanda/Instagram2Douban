@@ -1,0 +1,19 @@
+TEST:
+   instagram_client_id: 0a0fd5f2726a4d9387b5e827a65a169d
+   instagram_client_secret: 3f374090b5f941c6b0c0b6a489120a6e
+   instagram_redirect_uri: http://localhost:8080/auth/instagram
+   douban_api_key: 0804cba19dd625ae180e62e4d982710a
+   douban_api_secret: 7185e85738d74eb0
+   douban_redirect_uri: http://localhost:8080/auth/douban
+   PERIOD: 180000
+
+PRODUCTION:
+   instagram_client_id: 0a0fd5f2726a4d9387b5e827a65a169d
+   instagram_client_secret: 3f374090b5f941c6b0c0b6a489120a6e
+   instagram_redirect_uri: http://ins2douban.com/auth/instagram
+   douban_api_key: 087d1fa8c7b0696519775efa57113c2f
+   douban_api_secret: 74876e47a6d9e46a
+   douban_redirect_uri: http://ins2douban.com/auth/douban
+   PERIOD: 180000
+
+
