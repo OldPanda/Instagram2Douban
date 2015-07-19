@@ -158,9 +158,10 @@ def main():
     http_server = tornado.httpserver.HTTPServer(Application(db, conf))
     http_server.listen(options.port)
     sync_server = tornado.ioloop.PeriodicCallback(
-        partial(sync_img, db),
+        partial(sync_img, db, conf),
         #180000
-        conf["PERIOD"]
+        # conf["PERIOD"]
+        15000
     )  # 3 min
     sync_server.start()
     tornado.ioloop.IOLoop.instance().start()

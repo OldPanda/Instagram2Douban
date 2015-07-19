@@ -11,6 +11,7 @@ import logging
 
 INSTAGRAM_URL = 'https://api.instagram.com/v1/'
 DOUBAN_URL = 'https://api.douban.com/'
+CONFIG = {}
 
 
 def fetch_pic_and_upload(user, users):
@@ -18,10 +19,10 @@ def fetch_pic_and_upload(user, users):
        them onto Douban
     Args:
         user (dict): user information
+        users (MongoDB collection): users info database
     """
     instagram_info = user["instagram"]
     access_token = instagram_info["access_token"]
-    # username = instagram_info["username"]
     min_timestamp = user["last_sync_time"]
 
     url = INSTAGRAM_URL + "users/self/media/recent?"
@@ -30,6 +31,7 @@ def fetch_pic_and_upload(user, users):
             timestamp=min_timestamp
         )
     url += arguments
+
     try:
         response = urllib.urlopen(url).read()
         inst_response = json.loads(response)
@@ -39,26 +41,37 @@ def fetch_pic_and_upload(user, users):
         return
 
     if len(inst_response["data"]) == 0:
+        # no new picture
         return
     user["last_sync_time"] = str(int(time.time()))
     users.save(user)
+
     for pic_info in reversed(inst_response["data"]):
         pic_url = pic_info["images"]["standard_resolution"]["url"]
         caption = pic_info["caption"]
-        pic_caption = caption["text"] + "  via Ins2Douban" if caption \
-            else "via Ins2Douban"
-        upload_pic_to_douban(user, pic_url, pic_caption)
+        pic_caption = caption["text"] + "  via Instagram" if caption \
+            else "via Instagram"
+        is_refreshed = upload_pic_to_douban(user["douban"]["access_token"],
+                                            pic_url,
+                                            pic_caption,
+                                            users)
+        if is_refreshed:
+            # update user info because of new access token
+            user = users.find({
+                "douban.uid": user["douban"]["uid"]
+            })
 
 
-def upload_pic_to_douban(user, pic_url, caption):
+def upload_pic_to_douban(access_token, pic_url, caption, users):
     """Upload picture to Douban from url directly
     Args:
-        user (dict): user information
+        access_token (str): user's Douban access_token
         pic_url (str): picture url
         caption (str): picture caption
+        users (MongoDB collection): user database
+    Returns:
+        (bool): if re-upload happened(AKA. new access token is fetched)
     """
-    douban_info = user["douban"]
-    access_token = douban_info["access_token"]
     url = DOUBAN_URL + "shuo/v2/statuses/"
 
     opener = urllib2.build_opener(MultipartPostHandler.MultipartPostHandler)
@@ -66,14 +79,65 @@ def upload_pic_to_douban(user, pic_url, caption):
               "image": urllib2.urlopen(pic_url)}
     opener.addheaders = [("Authorization",
                           "Bearer {}".format(access_token))]
+
     try:
-        opener.open(url, params)
-        logging.info("Uploaded picture to " + url + " succeed")
+        res = opener.open(url, params)
+        if res.code == 200:
+            # upload pic succeed
+            logging.info("Uploaded picture to " + url + " succeed")
+            return False  # indicate if a new access token is generated
+        elif res.code == 106:
+            # access token expires
+            new_access_token = refresh(douban_info["refresh_token"], user, users)
+            if new_access_token:
+                # upload pic again
+                access_token = new_access_token
+                upload_pic_to_douban(access_token, pic_url, caption, users)
+                return True
+            else:
+                return False
     except:
         logging.error("Uploading picture failed: " + pic_url + " open error")
+        return False
 
 
-def sync_img(db):
+def refresh(refresh_token, user, users):
+    """Send refresh token request to Douban
+    Args:
+        refresh_token (str): refresh token used to fetch new token
+        user (dict): user info
+        users (MongoDB collection): collection
+    Returns:
+        (str): new token (or False signal) 
+    """
+    url = "https://www.douban.com/service/auth2/token"
+    params = {
+        "client_id": CONFIG["douban_api_key"],
+        "client_secret": CONFIG["douban_api_secret"],
+        "redirect_uri": CONFIG["douban_redirect_uri"],
+        "grant_type": "refresh_token",
+        "refresh_token": refresh_token
+    }
+
+    try:
+        # fetch new token using refresh token
+        response = urllib2.urlopen(url, urllib.urlencode(params))
+        user["access_token"] = response["access_token"]
+        user["expires_in"] = response["expires_in"]
+        user["refresh_token"] = response["refresh_token"]
+        users.save(user)
+        logging.info("Got a new access token for " + response["douban_user_id"])
+        return user["access_token"]
+    except:
+        logging.error("Fetch user " + user["uid"] + "'s refresh token failed. ")
+        return False
+
+
+def sync_img(db, conf):
+    """Synchronize pics for each user in database
+    """
+    global CONFIG
+    CONFIG = conf
     users = db["users"]
     cursor = users.find()
     for user in cursor:
