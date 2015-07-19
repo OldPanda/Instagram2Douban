@@ -160,8 +160,7 @@ def main():
     sync_server = tornado.ioloop.PeriodicCallback(
         partial(sync_img, db, conf),
         #180000
-        # conf["PERIOD"]
-        15000
+        conf["PERIOD"]
     )  # 3 min
     sync_server.start()
     tornado.ioloop.IOLoop.instance().start()
