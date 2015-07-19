@@ -5,7 +5,7 @@ TEST:
    douban_api_key: 0804cba19dd625ae180e62e4d982710a
    douban_api_secret: 7185e85738d74eb0
    douban_redirect_uri: http://localhost:8080/auth/douban
-   PERIOD: 180000
+   PERIOD: 15000
 
 PRODUCTION:
    instagram_client_id: 0a0fd5f2726a4d9387b5e827a65a169d
