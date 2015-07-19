@@ -1,4 +1,4 @@
-# Instagram2Douban
+# Instagram2Douban ![](https://magnum.travis-ci.com/Wilbeibi/Instagram2Douban.svg?token=sym9cLj5p97ch3Hd2dYg)
 Sync Instagram photos to Douban
 
 ### USAGE
