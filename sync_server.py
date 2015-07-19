@@ -49,8 +49,8 @@ def fetch_pic_and_upload(user, users):
     for pic_info in reversed(inst_response["data"]):
         pic_url = pic_info["images"]["standard_resolution"]["url"]
         caption = pic_info["caption"]
-        pic_caption = caption["text"] + "  via Instagram" if caption \
-            else "via Instagram"
+        pic_caption = caption["text"] + "  via Ins2Douban" if caption \
+            else "via Ins2Douban"
         is_refreshed = upload_pic_to_douban(user["douban"]["access_token"],
                                             pic_url,
                                             pic_caption,
