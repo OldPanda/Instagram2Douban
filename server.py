@@ -156,7 +156,7 @@ def main():
     else:
         conf = config["PRODUCTION"]
     http_server = tornado.httpserver.HTTPServer(Application(db, conf))
-    http_server.listen(options.port)
+    http_server.listen(options.port, address="0.0.0.0")
     sync_server = tornado.ioloop.PeriodicCallback(
         partial(sync_img, db),
         #180000
