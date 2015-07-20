@@ -26,14 +26,13 @@ def fetch_pic_and_upload(user, users):
     min_timestamp = user["last_sync_time"]
 
     url = INSTAGRAM_URL + "users/self/media/recent?"
-    arguments = "access_token={access_token}&min_timestamp={timestamp}".format(
-            access_token=access_token,
-            timestamp=min_timestamp
-        )
-    url += arguments
+    arguments = urllib.urlencode({
+        "access_token": access_token,
+        "min_timestamp": min_timestamp
+    })
 
     try:
-        response = urllib.urlopen(url).read()
+        response = urllib.urlopen(url+arguments).read()
         inst_response = json.loads(response)
         logging.info("Sent request to " + url)
     except:
@@ -58,7 +57,7 @@ def fetch_pic_and_upload(user, users):
         if is_refreshed:
             # update user info because of new access token
             user = users.find({
-                "douban.uid": user["douban"]["uid"]
+                "instagram.id": user["instagram"]["id"]
             })
 
 
@@ -110,6 +109,7 @@ def refresh(refresh_token, user, users):
     Returns:
         (str): new token (or False signal) 
     """
+    opener = urllib2.build_opener(MultipartPostHandler.MultipartPostHandler)
     url = "https://www.douban.com/service/auth2/token"
     params = {
         "client_id": CONFIG["douban_api_key"],
@@ -121,7 +121,7 @@ def refresh(refresh_token, user, users):
 
     try:
         # fetch new token using refresh token
-        response = urllib2.urlopen(url, urllib.urlencode(params))
+        response = opener.open(url, params).read()
         user["access_token"] = response["access_token"]
         user["expires_in"] = response["expires_in"]
         user["refresh_token"] = response["refresh_token"]
