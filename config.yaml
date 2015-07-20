@@ -4,7 +4,7 @@ TEST:
    instagram_redirect_uri: http://localhost:8080/auth/instagram
    douban_api_key: 0804cba19dd625ae180e62e4d982710a
    douban_api_secret: 7185e85738d74eb0
-   douban_redirect_uri: http://localhost:8080/auth/douban
+   douban_redirect_uri: http://localhost:8080/auth_douban
    PERIOD: 15000
 
 PRODUCTION:

@@ -97,7 +97,7 @@ class Application(tornado.web.Application):
     def __init__(self, db, conf):
         handlers = [
             (r"/", HomeHandler),
-            (r"/auth/douban", DoubanAuthHandler),
+            (r"/auth_douban", DoubanAuthHandler),
             (r"/auth/instagram", InstagramAuthHandler),
             (r"/unlink", UnlinkHandler)
             ]
