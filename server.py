@@ -145,7 +145,7 @@ def main():
                         datefmt='%m/%d/%Y %I:%M:%S %p',
                         filename='server_log',
                         filemode='a',
-                        level=logging.NOTSET)
+                        level=logging.WARNING)
     conn = MongoClient('mongodb://localhost:27017/')
     logging.info("MongoDB connection succeed")
     db = conn["insdouban"]
