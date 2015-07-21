@@ -55,7 +55,7 @@ class InstagramAuthHandler(InstagramOAuth2Mixin, tornado.web.RequestHandler):
                 self.application.user_info["instagram"] = token
                 # self.set_secure_cookie("instagram", str(uuid4()))
                 add_user(self.application.db, self.application.user_info)
-                self.redirect("/")
+                self.redirect("/?auth_succeed=True")
             elif token:
                 del_user(self.application.db, token)
                 self.redirect("/")
@@ -145,7 +145,7 @@ def main():
                         datefmt='%m/%d/%Y %I:%M:%S %p',
                         filename='server_log',
                         filemode='a',
-                        level=logging.WARNING)
+                        level=logging.NOTSET)
     conn = MongoClient('mongodb://localhost:27017/')
     logging.info("MongoDB connection succeed")
     db = conn["insdouban"]
