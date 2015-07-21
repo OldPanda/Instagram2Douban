@@ -95,8 +95,8 @@ def upload_pic_to_douban(user, pic_url, caption, users):
             new_access_token = refresh(refresh_token, user, users)
             if new_access_token:
                 # upload pic again
-                access_token = new_access_token
-                upload_pic_to_douban(access_token, pic_url, caption, users)
+                user["douban"]["access_token"] = new_access_token
+                upload_pic_to_douban(user, pic_url, caption, users)
                 return True
             else:
                 return False
