@@ -144,7 +144,7 @@ def main():
     logging.basicConfig(format='[%(asctime)s] %(message)s',
                         datefmt='%m/%d/%Y %I:%M:%S %p',
                         filename='server_log',
-                        filemode='wb',
+                        filemode='a',
                         level=logging.NOTSET)
     conn = MongoClient('mongodb://localhost:27017/')
     logging.info("MongoDB connection succeed")
