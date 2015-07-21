@@ -50,7 +50,7 @@ def fetch_pic_and_upload(user, users):
         caption = pic_info["caption"]
         pic_caption = caption["text"] + "  via Ins2Douban" if caption \
             else "via Ins2Douban"
-        is_refreshed = upload_pic_to_douban(user["douban"]["access_token"],
+        is_refreshed = upload_pic_to_douban(user,
                                             pic_url,
                                             pic_caption,
                                             users)
@@ -61,7 +61,7 @@ def fetch_pic_and_upload(user, users):
             })
 
 
-def upload_pic_to_douban(access_token, pic_url, caption, users):
+def upload_pic_to_douban(user, pic_url, caption, users):
     """Upload picture to Douban from url directly
     Args:
         access_token (str): user's Douban access_token
@@ -73,6 +73,7 @@ def upload_pic_to_douban(access_token, pic_url, caption, users):
     """
     url = DOUBAN_URL + "shuo/v2/statuses/"
 
+    access_token = user["douban"]["access_token"]
     opener = urllib2.build_opener(MultipartPostHandler.MultipartPostHandler)
     params = {"text": caption.encode("utf-8"),
               "image": urllib2.urlopen(pic_url)}
@@ -87,7 +88,9 @@ def upload_pic_to_douban(access_token, pic_url, caption, users):
             return False  # indicate if a new access token is generated
         elif res.code == 106:
             # access token expires
-            new_access_token = refresh(douban_info["refresh_token"], user, users)
+            logging.info("Douban user: " + user["douban"]["uid"] + " token expired")
+            refresh_token = user["douban"]["refresh_token"]
+            new_access_token = refresh(refresh_token, user, users)
             if new_access_token:
                 # upload pic again
                 access_token = new_access_token
