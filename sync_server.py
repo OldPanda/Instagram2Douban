@@ -84,7 +84,9 @@ def upload_pic_to_douban(user, pic_url, caption, users):
         res = opener.open(url, params)
         if res.code == 200:
             # upload pic succeed
-            logging.info("Uploaded picture to " + url + " succeed")
+            logging.info("Douban user: [{user}] uploaded picture succeed".format(
+                    user=user["douban"]["uid"]
+                ))
             return False  # indicate if a new access token is generated
         elif res.code == 106:
             # access token expires
