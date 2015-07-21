@@ -27,9 +27,15 @@ def oauth_data_to_doc(data):
 
     new_user = {"douban":{}, "instagram":{}, "last_sync_time": ""}
     for attr in douban_attr:
-        new_user["douban"][attr] = data["douban"][attr]
+        try:
+            new_user["douban"][attr] = data["douban"][attr]
+        except:
+            continue
     for attr in instagram_attr:
-        new_user["instagram"][attr] = data["instagram"][attr]
+        try:
+            new_user["instagram"][attr] = data["instagram"][attr]
+        except:
+            continue
     new_user["last_sync_time"] = str(int(time.time()))
 
     return new_user
