@@ -93,13 +93,25 @@ class UnlinkHandler(InstagramOAuth2Mixin, tornado.web.RequestHandler):
         )
 
 
+class NotfoundHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.render("404.html")
+
+
+class NowhereHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.redirect("/404")
+
+
 class Application(tornado.web.Application):
     def __init__(self, db, conf):
         handlers = [
             (r"/", HomeHandler),
             (r"/auth/douban", DoubanAuthHandler),
             (r"/auth/instagram", InstagramAuthHandler),
-            (r"/unlink", UnlinkHandler)
+            (r"/unlink", UnlinkHandler),
+            (r"/404", NotfoundHandler),
+            (r".*", NowhereHandler)
             ]
         settings = dict(
             template_path = os.path.join(os.path.dirname(__file__), "templates"),
