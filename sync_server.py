@@ -107,7 +107,7 @@ def refresh(refresh_token, user, users):
         user (dict): user info
         users (MongoDB collection): collection
     Returns:
-        (str): new token (or False signal) 
+        (str): new token (or False signal)
     """
     opener = urllib2.build_opener(MultipartPostHandler.MultipartPostHandler)
     url = "https://www.douban.com/service/auth2/token"
@@ -144,21 +144,21 @@ def sync_img(db, conf):
         fetch_pic_and_upload(user, users)
 
 
-def main():
-    """This function is used to be executed independently,
-       shouldn't be called outside
-    """
-    logging.basicConfig(format='[%(asctime)s] %(message)s',
-                        datefmt='%m/%d/%Y %I:%M:%S %p',
-                        filename='sync_server_log.txt',
-                        filemode='wb',
-                        level=logging.NOTSET)
-    conn = MongoClient('mongodb://localhost:27017/')
-    db = conn["insdouban"]
-    ioloop = tornado.ioloop.IOLoop.instance()
-    sync_server = tornado.ioloop.PeriodicCallback(
-        partial(sync_img, db),
-        15000
-        )  # 15s
-    sync_server.start()
-    ioloop.start()
+# def main():
+#     """This function is used to be executed independently,
+#        shouldn't be called outside
+#     """
+#     logging.basicConfig(format='[%(asctime)s] %(message)s',
+#                         datefmt='%m/%d/%Y %I:%M:%S %p',
+#                         filename='sync_server_log.txt',
+#                         filemode='wb',
+#                         level=logging.NOTSET)
+#     conn = MongoClient('mongodb://localhost:27017/')
+#     db = conn["insdouban"]
+#     ioloop = tornado.ioloop.IOLoop.instance()
+#     sync_server = tornado.ioloop.PeriodicCallback(
+#         partial(sync_img, db),
+#         15000
+#         )  # 15s
+#     sync_server.start()
+#     ioloop.start()
