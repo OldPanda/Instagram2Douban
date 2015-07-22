@@ -57,6 +57,7 @@ class InstagramAuthHandler(InstagramOAuth2Mixin, tornado.web.RequestHandler):
                 add_user(self.application.db, self.application.user_info)
                 self.redirect("/?auth_succeed=True")
             elif token:
+                print "asdf"
                 del_user(self.application.db, token)
                 self.redirect("/")
         else:
@@ -149,16 +150,15 @@ def del_user(db, user_info):
     """delete user from database
     """
     inst_id = user_info['user']['id']
-    db["users"].remove({"instagram.id": inst_id})
-    '''
     # db["users"].remove({"instagram.id": inst_id})
     user = db["users"].find({"instagram.id": inst_id})
-    logging.info("User Douban: [{douban}], Instagram: [{inst}] unlinked. ".format(
-            douban=user["douban"]["uid"],
-            inst=user["instagram"]["username"]
+    if user:
+        logging.info("User Douban: [{douban}], Instagram: [{inst}] unlinked. ".format(
+                douban=user["douban"]["uid"],
+                inst=user["instagram"]["username"]
+            )
         )
-    )
-    '''
+    db["users"].remove(user)
 
 
 def main():
