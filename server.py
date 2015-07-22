@@ -151,7 +151,7 @@ def del_user(db, user_info):
     """
     inst_id = user_info['user']['id']
     # db["users"].remove({"instagram.id": inst_id})
-    user = db["users"].find({"instagram.id": inst_id})
+    user = db["users"].findOne({"instagram.id": inst_id})
     if user:
         logging.info("User Douban: [{douban}], Instagram: [{inst}] unlinked. ".format(
                 douban=user["douban"]["uid"],
