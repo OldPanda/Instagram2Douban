@@ -88,7 +88,7 @@ def upload_pic_to_douban(user, pic_url, caption, users):
                     user=user["douban"]["uid"]
                 ))
             return False  # indicate if a new access token is generated
-        elif res.code == 106:
+        else:
             # access token expires
             logging.warning("Douban user: " + user["douban"]["uid"] + " token expired")
             refresh_token = user["douban"]["refresh_token"]
