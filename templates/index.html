@@ -27,25 +27,9 @@
             <p>Link your douban account with your instagram account:</p>
             <div>
                 <a href="/auth/douban" class="btn btn-primary btn-lg" style="margin-right: 10px;"><span class="fa fa-link"></span> Link</a>
-                <a href="#" class="btn btn-primary btn-lg" style="margin-left: 10px;" onclick="if(confirm('Are you sure? ')) location.href='http://ins2douban.com/unlink' "><span class="fa fa-chain-broken"></span> Unlink</a>
+                <a href="#" class="btn btn-primary btn-lg" style="margin-left: 10px;" onclick="if(confirm('Are you sure? ')) location.href='{{ unlink }}' "><span class="fa fa-chain-broken"></span> Unlink</a>
             </div>
         </div>
-<!--
-        <hr>
-        <div class="alert alert-warning">
-            <p>
-                某些Chrome插件可能会导致link失败，例如“豆藤”。
-            </p>
-            <p>
-                可通过以下任一种方式解决：
-                <ul>
-                    <li>暂时停用这些插件</li>
-                    <li>在Chrome匿名模式下link</li>
-                    <li>用Safari，Firefox等浏览器</li>
-                </ul>
-            </p>
-        </div>
--->
     </div>
     <script type="text/javascript" src="/static/js/jquery-1.11.2.min.js"></script>
     <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
@@ -54,7 +38,6 @@
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
         })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-
         ga('create', 'UA-33451886-3', 'auto');
         ga('send', 'pageview');
 
