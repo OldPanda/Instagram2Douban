@@ -34,9 +34,9 @@ def fetch_pic_and_upload(user, users):
     try:
         response = urllib.urlopen(url+arguments).read()
         inst_response = json.loads(response)
-        logging.info("Sent request to " + url)
+        # logging.info("Sent request to " + url)
     except:
-        logging.error(url + " response error")
+        logging.error("Inst_user: " + instagram_info["username"] + " response error")
         return
 
     if len(inst_response["data"]) == 0:
@@ -83,7 +83,7 @@ def upload_pic_to_douban(access_token, pic_url, caption, users):
         res = opener.open(url, params)
         if res.code == 200:
             # upload pic succeed
-            logging.info("Uploaded picture to " + url + " succeed")
+            # logging.info("Uploaded picture to " + url + " succeed")
             return False  # indicate if a new access token is generated
         elif res.code == 106:
             # access token expires
