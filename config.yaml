@@ -5,6 +5,7 @@ TEST:
    douban_api_key: 0804cba19dd625ae180e62e4d982710a
    douban_api_secret: 7185e85738d74eb0
    douban_redirect_uri: http://localhost:8080/auth/douban
+   unlink: http://localhost:8080/unlink
    PERIOD: 15000
 
 PRODUCTION:
@@ -14,6 +15,7 @@ PRODUCTION:
    douban_api_key: 087d1fa8c7b0696519775efa57113c2f
    douban_api_secret: 74876e47a6d9e46a
    douban_redirect_uri: http://ins2douban.com/auth/douban
+   unlink: http://ins2douban.com/unlink
    PERIOD: 180000
 
 

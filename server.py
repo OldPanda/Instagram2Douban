@@ -57,7 +57,6 @@ class InstagramAuthHandler(InstagramOAuth2Mixin, tornado.web.RequestHandler):
                 add_user(self.application.db, self.application.user_info)
                 self.redirect("/?auth_succeed=True")
             elif token:
-                print "asdf"
                 del_user(self.application.db, token)
                 self.redirect("/")
         else:
@@ -79,7 +78,9 @@ class HomeHandler(tornado.web.RequestHandler):
             message = None
         self.clear_all_cookies()
         self.application.user_info = {}
-        self.render("index.html", message=message)
+        self.render("index.html",
+                    message=message,
+                    unlink=self.settings["unlink"])
 
 
 class UnlinkHandler(InstagramOAuth2Mixin, tornado.web.RequestHandler):
@@ -125,6 +126,7 @@ class Application(tornado.web.Application):
             douban_redirect_uri = conf["douban_redirect_uri"],
             cookie_secret = str(base64.b64encode(uuid4().bytes + uuid4().bytes)),
             # xsrf_cookies = True,
+            unlink = conf["unlink"],
             debug = True,
             )
 
@@ -150,8 +152,7 @@ def del_user(db, user_info):
     """delete user from database
     """
     inst_id = user_info['user']['id']
-    db["users"].remove({"instagram.id": inst_id})
-    '''
+    # db["users"].remove({"instagram.id": inst_id})
     user = db["users"].find_one({"instagram.id": inst_id})
     if user:
         logging.info("User Douban: [{douban}], Instagram: [{inst}] unlinked. ".format(
@@ -159,8 +160,8 @@ def del_user(db, user_info):
                 inst=user["instagram"]["username"]
             )
         )
-    db["users"].remove(user)
-    '''
+        db["users"].remove({"instagram.id": inst_id})
+    
 
 
 def main():
