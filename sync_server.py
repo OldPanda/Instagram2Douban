@@ -39,6 +39,10 @@ def fetch_pic_and_upload(user, users):
         logging.error("Inst_user: " + instagram_info["username"] + " response error")
         return
 
+    if inst_response["meta"]["code"] != 200:
+        logging.error("Fetch inst data failed. Id: " + instagram_info["username"])
+        return
+
     if len(inst_response["data"]) == 0:
         # no new picture
         return
