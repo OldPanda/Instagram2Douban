@@ -36,6 +36,9 @@
 # Based on what I'm doing, I modified it to accept online file only, so the file url 
 # must be provided. 
 #
+# 2015/07/17 Jinhui Zhang <zjh0930@gmail.com>
+# I modified this handler again to make it accept url directly.
+#
 """
 Usage:
     Enables the use of multipart/form-data for posting forms
@@ -48,7 +51,7 @@ Example:
     import MultipartPostHandler, urllib2
     opener = urllib2.build_opener(MultipartPostHandler.MultipartPostHandler)
     params = { "username" : "bob", "password" : "riviera",
-                "file" : urllib.urlopen("file url") }
+                "file" : url }
     opener.open("http://wwww.bobsite.com/upload/", params)
 """
 
@@ -56,6 +59,7 @@ import urllib
 import urllib2
 import mimetools, mimetypes
 import os, stat
+import urlparse
 from cStringIO import StringIO
 
 class Callable:
@@ -75,10 +79,9 @@ class MultipartPostHandler(urllib2.BaseHandler):
             v_files = []
             v_vars = []
             try:
-                for(key, value) in data.items():
-                    if key == "image":
-                        # uploaded picture
-                        v_files.append((key, value))
+                for (key, value) in data.items():
+                    if is_url(value):
+                        v_files.append((key, urllib2.urlopen(value)))
                     else:
                         v_vars.append((key, value))
             except TypeError:
@@ -121,7 +124,6 @@ class MultipartPostHandler(urllib2.BaseHandler):
             buffer.write('Content-Disposition: form-data; name="%s"; filename="%s"\r\n' % (key, filename))
             buffer.write('Content-Type: %s; charset=utf-8\r\n' % contenttype)
             buffer.write('Content-Length: %s\r\n' % file_size)
-            # fd.seek(0)
             buffer.write('\r\n' + fd.read() + '\r\n')
         buffer.write('--' + boundary + '--\r\n')
         buffer = buffer.getvalue()
@@ -129,4 +131,10 @@ class MultipartPostHandler(urllib2.BaseHandler):
     multipart_encode = Callable(multipart_encode)
 
     https_request = http_request
-    
+
+
+def is_url(string):
+    """Check if the given string is url.
+    """
+    parts = urlparse.urlparse(string)
+    return parts.scheme and parts.netloc

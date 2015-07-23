@@ -39,6 +39,10 @@ def fetch_pic_and_upload(user, users):
         logging.error("Inst_user: " + instagram_info["username"] + " response error")
         return
 
+    if inst_response["meta"]["code"] != 200:
+        logging.error("Fetch inst data failed. Id: " + instagram_info["username"])
+        return
+
     if len(inst_response["data"]) == 0:
         # no new picture
         return
@@ -76,7 +80,7 @@ def upload_pic_to_douban(user, pic_url, caption, users):
     access_token = user["douban"]["access_token"]
     opener = urllib2.build_opener(MultipartPostHandler.MultipartPostHandler)
     params = {"text": caption.encode("utf-8"),
-              "image": urllib2.urlopen(pic_url)}
+              "image": pic_url}
     opener.addheaders = [("Authorization",
                           "Bearer {}".format(access_token))]
 
@@ -88,7 +92,7 @@ def upload_pic_to_douban(user, pic_url, caption, users):
                     user=user["douban"]["uid"]
                 ))
             return False  # indicate if a new access token is generated
-        elif res.code == 106:
+        else:
             # access token expires
             logging.warning("Douban user: " + user["douban"]["uid"] + " token expired")
             refresh_token = user["douban"]["refresh_token"]
