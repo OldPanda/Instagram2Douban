@@ -80,7 +80,7 @@ def upload_pic_to_douban(user, pic_url, caption, users):
     access_token = user["douban"]["access_token"]
     opener = urllib2.build_opener(MultipartPostHandler.MultipartPostHandler)
     params = {"text": caption.encode("utf-8"),
-              "image": urllib2.urlopen(pic_url)}
+              "image": pic_url}
     opener.addheaders = [("Authorization",
                           "Bearer {}".format(access_token))]
 
