@@ -137,6 +137,11 @@ class Application(tornado.web.Application):
 
 def add_user(db, user_info):
     """ add user to database
+    Args:
+        db (mongodb instance)
+        user_info (dict): dict of douban and instagram info
+    Returns:
+        boolen: success or not
     """
     new_user = tools.oauth_data_to_doc(user_info)
     try:
@@ -148,10 +153,11 @@ def add_user(db, user_info):
                     instagram=new_user["instagram"]["username"]
                  ))
     except:
-        db.users.save(new_user)
+        # db.users.save(new_user)
+        # TODO: return False, red notification
         logging.warning("Warning: Saved user Douban: [{douban}], Instagram: [{instagram}]"
                  .format(
-                    douban=new_user["douban"]["uid"],
+                    douban=new_user["douban"],
                     instagram=new_user["instagram"]["username"]
                  ))
 
