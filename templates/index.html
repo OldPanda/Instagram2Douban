@@ -1,46 +1,19 @@
-<!doctype html>
-<html>
-<head>
-    <meta charset="utf-8">
-    <meta http-equiv="x-ua-compatible" content="ie=edge">
-    <meta name="description" content="Sync your post from instagram to douban">
-    <title>Ins2Douban</title>
-    <link rel="shortcut icon" href="/static/favicon.ico">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css"> <!-- load bootstrap css -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css"> <!-- load fontawesome -->
-    <link rel="stylesheet" href="/static/css/mystyle.css">
-    <style>
-        body        { padding-top:80px; }
-    </style>
-</head>
-<body>
-    <div class="container">
-        {% if message %}
-            <div class="alert alert-success alert-dismissible" role="alert">
-                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                {{ message }}
-            </div>
-        {% end %}
-        <div class="jumbotron text-center">
-            <h1><i class="fa fa-refresh"></i></span><font color="#337AB7">  If</font> Instagram <font color="#D9534F">then</font> Douban</h1>
+{% extends "template.html" %}
 
-            <p>Link your douban account with your instagram account:</p>
-            <div>
-                <a href="/auth/douban" class="btn btn-primary btn-lg" style="margin-right: 10px;"><span class="fa fa-link"></span> Link</a>
-                <a href="#" class="btn btn-primary btn-lg" style="margin-left: 10px;" onclick="if(confirm('Are you sure? ')) location.href='{{ unlink }}' "><span class="fa fa-chain-broken"></span> Unlink</a>
-            </div>
-        </div>
+{% block body%}
+{% if message %}
+    <div class="alert alert-success alert-dismissible" role="alert">
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        {{ message }}
     </div>
-    <script type="text/javascript" src="/static/js/jquery-1.11.2.min.js"></script>
-    <script type="text/javascript" src="/static/js/bootstrap.min.js"></script>
-    <script>
-        (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-        (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-        m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-        })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-        ga('create', 'UA-33451886-3', 'auto');
-        ga('send', 'pageview');
+{% end %}
+<div class="jumbotron text-center">
+    <h1><i class="fa fa-refresh"></i></span><font color="#337AB7">  If</font> Instagram <font color="#D9534F">then</font> Douban</h1>
 
-    </script>
-</body>
-</html>
+    <p>Link your douban account with your instagram account:</p>
+    <div>
+        <a href="/auth/douban" class="btn btn-primary btn-lg" style="margin-right: 10px;"><span class="fa fa-link"></span> Link</a>
+        <a href="#" class="btn btn-primary btn-lg" style="margin-left: 10px;" onclick="if(confirm('Are you sure? ')) location.href='{{ unlink }}' "><span class="fa fa-chain-broken"></span> Unlink</a>
+    </div>
+</div>
+{% end %}
