@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="/static/css/mystyle.css">
 </head>
 <body>
-    <nav class="navbar">
+    <nav class="navbar navbar-default">
         <div class="container">
             <div class="navbar-header">
                 <button class="navbar-toggle collapsed" type="button" data-toggle="collapse" data-target="#navigationbar">
@@ -23,9 +23,12 @@
                 <a class="navbar-brand hidden-sm" href="/">Ins2Douban</a>
             </div>
             <div class="navbar-collapse collapse" id="navigationbar" role="navigation">
-                <ul class="nav nav-pills pull-right">
-                    <li>
-                        <a href="/" role="presentation" class="active">关于我们</a>
+                <ul class="nav navbar-nav pull-right">
+                    <li {% if home %}class="active"{% end %}>
+                        <a href="/">Home</a>
+                    </li>
+                    <li {% if about %}class="active"{% end %}>
+                        <a href="/about">About</a>
                     </li>
                 </ul>
             </div>

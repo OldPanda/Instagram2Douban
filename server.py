@@ -80,7 +80,9 @@ class HomeHandler(tornado.web.RequestHandler):
         self.application.user_info = {}
         self.render("index.html",
                     message=message,
-                    unlink=self.settings["unlink"])
+                    unlink=self.settings["unlink"],
+                    home=True,
+                    about=False)
 
 
 class UnlinkHandler(InstagramOAuth2Mixin, tornado.web.RequestHandler):
@@ -93,6 +95,13 @@ class UnlinkHandler(InstagramOAuth2Mixin, tornado.web.RequestHandler):
             scope=None,  # used default scope
             response_type='code'
         )
+
+
+class AboutHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.render("about.html",
+                    home=False,
+                    about=True)
 
 
 class NotfoundHandler(tornado.web.RequestHandler):
@@ -112,6 +121,7 @@ class Application(tornado.web.Application):
             (r"/auth/douban", DoubanAuthHandler),
             (r"/auth/instagram", InstagramAuthHandler),
             (r"/unlink", UnlinkHandler),
+            (r"/about", AboutHandler),
             (r"/404", NotfoundHandler),
             (r".*", NowhereHandler)
             ]
@@ -188,7 +198,7 @@ def main():
     else:
         conf = config["PRODUCTION"]
     http_server = tornado.httpserver.HTTPServer(Application(db, conf))
-    http_server.listen(options.port)
+    http_server.listen(options.port, address="0.0.0.0")
     sync_server = tornado.ioloop.PeriodicCallback(
         partial(sync_img, db, conf),
         #180000

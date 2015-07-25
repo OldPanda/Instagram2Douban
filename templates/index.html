@@ -1,19 +1,21 @@
 {% extends "template.html" %}
 
 {% block body%}
-{% if message %}
-    <div class="alert alert-success alert-dismissible" role="alert">
-        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-        {{ message }}
-    </div>
-{% end %}
-<div class="jumbotron text-center">
-    <h1><i class="fa fa-refresh"></i></span><font color="#337AB7">  If</font> Instagram <font color="#D9534F">then</font> Douban</h1>
+<div class="container" style="margin-top: 30px;">
+    {% if message %}
+        <div class="alert alert-success alert-dismissible" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            {{ message }}
+        </div>
+    {% end %}
+    <div class="jumbotron text-center">
+        <h1><i class="fa fa-refresh"></i></span><font color="#337AB7">  If</font> Instagram <font color="#D9534F">then</font> Douban</h1>
 
-    <p>Link your douban account with your instagram account:</p>
-    <div>
-        <a href="/auth/douban" class="btn btn-primary btn-lg" style="margin-right: 10px;"><span class="fa fa-link"></span> Link</a>
-        <a href="#" class="btn btn-primary btn-lg" style="margin-left: 10px;" onclick="if(confirm('Are you sure? ')) location.href='{{ unlink }}' "><span class="fa fa-chain-broken"></span> Unlink</a>
+        <p>Link your douban account with your instagram account:</p>
+        <div>
+            <a href="/auth/douban" class="btn btn-primary btn-lg" style="margin-right: 10px;"><span class="fa fa-link"></span> Link</a>
+            <a href="#" class="btn btn-primary btn-lg" style="margin-left: 10px;" onclick="if(confirm('Are you sure? ')) location.href='{{ unlink }}' "><span class="fa fa-chain-broken"></span> Unlink</a>
+        </div>
     </div>
 </div>
 {% end %}
