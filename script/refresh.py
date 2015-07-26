@@ -8,7 +8,7 @@ def refresh():
     conn = MongoClient('mongodb://localhost:27017/')
     db = conn["insdouban"]
     config = yaml.load(file("../config.yaml", "r"))
-    if sys.argv[1] == "--test":
+    if len(sys.argv) > 1 and sys.argv[1] == "--test":
         conf = config["TEST"]
     else:
         conf = config["PRODUCTION"]
