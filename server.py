@@ -20,6 +20,7 @@ from sync_server import sync_img
 define("port", default=8080, help="run on the given port", type=int)
 define("test", default=False, help="Turn on autoreload and log to stderr", type=bool)
 
+
 class DoubanAuthHandler(DoubanOAuth2Mixin, tornado.web.RequestHandler):
     @tornado.gen.coroutine
     def get(self):
