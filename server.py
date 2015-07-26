@@ -168,8 +168,7 @@ def del_user(db, user_info):
                 inst=user["instagram"]["username"]
             )
         )
-        db["users"].remove({"instagram.id": inst_id})
-    
+        db["users"].remove({"instagram.id": inst_id})   
 
 
 def main():
