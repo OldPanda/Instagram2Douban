@@ -46,15 +46,14 @@ def fetch_pic_and_upload(user, users):
     if len(inst_response["data"]) == 0:
         # no new picture
         return
-    user["last_sync_time"] = str(int(time.time()))
-    users.save(user)
+
 
     for pic_info in reversed(inst_response["data"]):
         pic_url = pic_info["images"]["standard_resolution"]["url"]
         caption = pic_info["caption"]
         pic_caption = caption["text"] + "  via Ins2Douban" if caption \
             else "via Ins2Douban"
-        is_refreshed = upload_pic_to_douban(user,
+        is_refreshed, success = upload_pic_to_douban(user,
                                             pic_url,
                                             pic_caption,
                                             users)
@@ -63,7 +62,9 @@ def fetch_pic_and_upload(user, users):
             user = users.find({
                 "instagram.id": user["instagram"]["id"]
             })
-
+        if success:
+            user["last_sync_time"] = str(int(time.time()))
+            users.save(user)
 
 def upload_pic_to_douban(user, pic_url, caption, users):
     """Upload picture to Douban from url directly
@@ -73,7 +74,8 @@ def upload_pic_to_douban(user, pic_url, caption, users):
         caption (str): picture caption
         users (MongoDB collection): user database
     Returns:
-        (bool): if re-upload happened(AKA. new access token is fetched)
+        (bool, bool): if re-upload happened(AKA. new access token is fetched)
+                      if success, return True
     """
     url = DOUBAN_URL + "shuo/v2/statuses/"
 
@@ -91,7 +93,7 @@ def upload_pic_to_douban(user, pic_url, caption, users):
             logging.info("Douban user: [{user}] uploaded picture succeed".format(
                     user=user["douban"]["uid"]
                 ))
-            return False  # indicate if a new access token is generated
+            return False, True # indicate if a new access token is generated
         else:
             # access token expires
             logging.warning("Douban user: " + user["douban"]["uid"] + " token expired")
@@ -101,12 +103,12 @@ def upload_pic_to_douban(user, pic_url, caption, users):
                 # upload pic again
                 user["douban"]["access_token"] = new_access_token
                 upload_pic_to_douban(user, pic_url, caption, users)
-                return True
+                return True, True
             else:
-                return False
+                return False, True
     except:
-        logging.error("Uploading picture failed: " + pic_url + " open error")
-        return False
+        logging.error(usr["douban"]["uid"] + "uploaded picture failed: " + pic_url + " open error")
+        return False, False
 
 
 def refresh(refresh_token, user, users):
