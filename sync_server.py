@@ -105,7 +105,7 @@ def upload_pic_to_douban(user, pic_url, caption, users):
                 upload_pic_to_douban(user, pic_url, caption, users)
                 return True, True
             else:
-                return False, True
+                return False, False
     except:
         logging.error(usr["douban"]["uid"] + "uploaded picture failed: " + pic_url + " open error")
         return False, False
