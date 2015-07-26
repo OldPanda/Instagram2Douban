@@ -23,11 +23,12 @@ def refresh():
     for user in cursor:
         client.refresh_token(user["douban"]["refresh_token"])  # refresh token
         if client.token_code == "":
-            print "Douban user: " + user["douban"]["uid"] + ", Refresh token failed"
+            print "[FAILED] Douban user: " + user["douban"]["uid"] + ", Refresh token"
             continue
         user["douban"]["access_token"] = client.token_code
         user["douban"]["refresh_token"] = client.refresh_token_code
         db["users"].save(user)
+        print "[SUCCEED] Douban user: " + user["douban"]["uid"] + ", Refresh token"
 
 
 if __name__ == "__main__":
