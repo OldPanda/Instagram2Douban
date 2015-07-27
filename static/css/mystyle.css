@@ -30,7 +30,7 @@ html {
     background-size: cover;
     background-color: #d8dcb9;
 }
-    
+
 body {
     text-align: center;
     font-family: 'MuseoSans900', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -75,12 +75,20 @@ main #frame {
 
 main #frame h1 {
     padding-top: 29px;
-    height: 100px;  /* just modified here */
+    height: 60px;  /* just modified here */
 }
 
-main #frame p.est {
+main #frame span.est {
     font-size: 30px;
+    font-family: SentyTEA-BAsic;
 }
+
+main #frame span.est_en {
+    font-size: 30px;
+    font-family: cursive;
+    font-style: italic;
+}
+
 
 footer {
     position: fixed;
@@ -173,6 +181,6 @@ footer {
 }
 
 .video-background video {
-    min-height: 100%; 
-    min-width:100%; 
+    min-height: 100%;
+    min-width:100%;
 }
