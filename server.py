@@ -79,11 +79,12 @@ class HomeHandler(tornado.web.RequestHandler):
             message = None
         self.clear_all_cookies()
         self.application.user_info = {}
-        self.render("index.html",
-                    message=message,
-                    unlink=self.settings["unlink"],
-                    home=True,
-                    about=False)
+        # self.render("index.html",
+        #             message=message,
+        #             unlink=self.settings["unlink"],
+        #             home=True,
+        #             about=False)
+        self.render("index1.html")
 
 
 class UnlinkHandler(InstagramOAuth2Mixin, tornado.web.RequestHandler):
