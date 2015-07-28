@@ -20,6 +20,7 @@ from sync_server import sync_img
 define("port", default=8080, help="run on the given port", type=int)
 define("test", default=False, help="Turn on autoreload and log to stderr", type=bool)
 
+
 class DoubanAuthHandler(DoubanOAuth2Mixin, tornado.web.RequestHandler):
     @tornado.gen.coroutine
     def get(self):
@@ -78,8 +79,12 @@ class HomeHandler(tornado.web.RequestHandler):
             message = None
         self.clear_all_cookies()
         self.application.user_info = {}
-        self.render("index.html",
-                    message=message,
+        # self.render("index.html",
+        #             message=message,
+        #             unlink=self.settings["unlink"],
+        #             home=True,
+        #             about=False)
+        self.render("index1.html",
                     unlink=self.settings["unlink"])
 
 
@@ -93,6 +98,13 @@ class UnlinkHandler(InstagramOAuth2Mixin, tornado.web.RequestHandler):
             scope=None,  # used default scope
             response_type='code'
         )
+
+
+class AboutHandler(tornado.web.RequestHandler):
+    def get(self):
+        self.render("about.html",
+                    home=False,
+                    about=True)
 
 
 class NotfoundHandler(tornado.web.RequestHandler):
@@ -112,6 +124,7 @@ class Application(tornado.web.Application):
             (r"/auth/douban", DoubanAuthHandler),
             (r"/auth/instagram", InstagramAuthHandler),
             (r"/unlink", UnlinkHandler),
+            (r"/about", AboutHandler),
             (r"/404", NotfoundHandler),
             (r".*", NowhereHandler)
             ]
@@ -194,7 +207,7 @@ def main():
     else:
         conf = config["PRODUCTION"]
     http_server = tornado.httpserver.HTTPServer(Application(db, conf))
-    http_server.listen(options.port)
+    http_server.listen(options.port, address="0.0.0.0")
     sync_server = tornado.ioloop.PeriodicCallback(
         partial(sync_img, db, conf),
         #180000

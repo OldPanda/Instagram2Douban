@@ -1,8 +1,235 @@
-.btn-lg {
-    padding: 5px 16px;
-    padding-top: 5px;
-    padding-right: 16px;
-    padding-bottom: 5px;
-    padding-left: 16px;
-    font-size: 17px;
+@font-face {
+    font-family: 'SentyTEA-Basic';
+    src: url(../font/SentyTEA-Basic.ttf) format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'optimized';
+    src: url(../font/optimized.ttf) format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* For symbols */
+@font-face {
+    font-family: 'icomoon';
+    src: url(../font/icoMoon.ttf?-u1sm2p) format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockquote, pre,a, abbr, acronym, address, big, cite, code,del, dfn, em, font, img, ins, kbd, q, s, samp, small, strike, sub, sup, tt, var,b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    outline: 0;
+    font-size: 100%;
+    vertical-align: baseline;
+}
+
+html {
+    background: url(../image/smaller.jpg) no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+body {
+    text-align: center;
+    font-family: 'MuseoSans900', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #FFF;
+    text-shadow: 0 1px 2px rgba(0,0,0,.25);
+    -webkit-font-smoothing: antialiased;
+}
+
+html, body {
+    margin: 0;
+    width: 100%;
+    height: 100%;
+}
+
+
+/* Layout –––––––––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+#outer-wrapper {
+    background: transparent;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+main {
+    position:absolute; top:0; bottom:0; left:0; right:0;
+    margin:auto; height:240px; width:70%;
+
+    font-size: 55px;
+    letter-spacing: -3px;
+}
+
+main #frame {
+    font-family: optimized; /* 'SentyTEA-Basic' */
+    height:  125px;
+    background: transparent no-repeat center bottom;
+    margin: 0 auto;
+    display: inline-block;
+    padding: 0 10px;
+    font-size: 70px;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+main #frame h1 {
+    padding-top: 29px;
+    height: 60px;  /* just modified here */
+}
+
+main #frame span.est {
+    font-size: 30px;
+    /*font-family: optimized;*/ /* SentyTEA-BAsic */
+}
+
+main #frame span.est_en {
+    font-size: 30px;
+    font-family: cursive;
+    /*font-style: italic;*/
+}
+
+/* Button –––––––––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+main #func-buttons {
+    font-family: ;
+    font-size: 20px;
+    width: 400px;
+    margin: 50px auto;
+}
+
+main #func-buttons ul li {
+    display: inline-block;
+}
+
+main #func-buttons ul li a {
+    width: 120px;
+    height: 40px;
+    display: block;
+    margin: 0 5px;
+}
+
+main #func-buttons li a.link {
+    margin-right: 25px;
+}
+
+main #func-buttons li a.unlink {
+    margin-left: 25px;
+}
+
+/*comes from https://github.com/sixrevisions/semi-transparent-buttons/blob/master*/
+.semi-transparent-button {
+    display: block;
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 8px;
+    width: 80%;
+    max-width: 200px;
+    background: #fff; /* fallback color for old browsers */
+    background: rgba(230, 233, 237, 0.3);
+    border-radius: 8px;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: all 0.3s ease-out;
+}
+.semi-transparent-button:hover,
+.semi-transparent-button:focus,
+.semi-transparent-button:active {
+    background-color: #E6E9ED;
+    color: #000;
+    transition: all 0.5s ease-in;
+}
+.semi-transparent:focus {
+    outline: none;
+}
+
+.with-border {
+    border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+/* Icon –––––––––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.icon {
+    font-family: 'icomoon';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-link:before {
+    content: "\e600";
+}
+
+.icon-unlink:before {
+    content: "\e601";
+}
+
+footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 100px;
+    width: 100%;
+    clear: both;
+    padding: 0 0 50px 0;
+}
+
+#wrapper {
+    width: 750px;
+    margin: 0 auto;
+}
+
+
+/* Video –––––––––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.video-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+}
+
+.video-background video {
+    min-height: 100%;
+    min-width: 100%;
+}
+
+/* Background */
+#bg {
+  position: fixed; 
+  top: -50%; 
+  left: -50%; 
+  width: 200%; 
+  height: 200%;
+}
+#bg img {
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0; 
+  margin: auto; 
+  min-width: 50%;
+  min-height: 50%;
 }
