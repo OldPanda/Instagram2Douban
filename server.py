@@ -84,7 +84,8 @@ class HomeHandler(tornado.web.RequestHandler):
         #             unlink=self.settings["unlink"],
         #             home=True,
         #             about=False)
-        self.render("index1.html")
+        self.render("index1.html",
+                    unlink=self.settings["unlink"])
 
 
 class UnlinkHandler(InstagramOAuth2Mixin, tornado.web.RequestHandler):
