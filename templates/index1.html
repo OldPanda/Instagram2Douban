@@ -9,7 +9,7 @@
     <title>Ins2Douban</title>
 
     <link rel="shortcut icon" href="/static/favicon.ico">
-    <link rel="stylesheet" href="/static/css/mystyle.css" media="screen" async>
+    <link rel="stylesheet" href="/static/css/mystyle.min.css" media="screen" async>
     <style id="style-1-cropbar-clipper">
     /* Copyright 2014 Evernote Corporation. All rights reserved. */
         .en-markup-crop-options {
@@ -47,7 +47,7 @@
                         <a href="/auth/douban" class="link semi-transparent-button"><span class="icon icon-link"></span> Link</a>
                     </li>
                     <li>
-                        <a href="#" onclick="if(confirm('Are you sure? ')) location.href='{{ unlink }}' " class="unlink semi-transparent-button"><span class="icon icon-unlink"></span> Unlink</a>
+                        <a href="/" onclick="if(confirm('Are you sure? ')) location.href='{{ unlink }}' " class="unlink semi-transparent-button"><span class="icon icon-unlink"></span> Unlink</a>
                     </li>
                 </ul>
             </div>
