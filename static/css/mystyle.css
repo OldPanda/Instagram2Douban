@@ -1,15 +1,21 @@
-.btn-lg {
-    padding: 5px 16px;
-    padding-top: 5px;
-    padding-right: 16px;
-    padding-bottom: 5px;
-    padding-left: 16px;
-    font-size: 17px;
+@font-face {
+    font-family: 'SentyTEA-Basic';
+    src: url(../font/SentyTEA-Basic.ttf) format('truetype');
+    font-weight: normal;
+    font-style: normal;
 }
 
 @font-face {
     font-family: 'optimized';
-    src: url('../font/optimized.ttf') format('truetype');
+    src: url(../font/optimized.ttf) format('truetype');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* For symbols */
+@font-face {
+    font-family: 'icomoon';
+    src: url(../font/icoMoon.ttf?-u1sm2p) format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -24,11 +30,11 @@ html, body, div, span, applet, object, iframe,h1, h2, h3, h4, h5, h6, p, blockqu
 }
 
 html {
+    background: url(../image/smaller.jpg) no-repeat center center fixed;
     -webkit-background-size: cover;
     -moz-background-size: cover;
     -o-background-size: cover;
     background-size: cover;
-    background-color: #d8dcb9;
 }
 
 body {
@@ -64,13 +70,16 @@ main {
 }
 
 main #frame {
-    font-family: 'optimized'; /* 'SentyTEA-Basic' */
+    font-family: optimized; /* 'SentyTEA-Basic' */
     height:  125px;
     background: transparent no-repeat center bottom;
     margin: 0 auto;
     display: inline-block;
     padding: 0 10px;
     font-size: 70px;
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 main #frame h1 {
@@ -80,19 +89,22 @@ main #frame h1 {
 
 main #frame span.est {
     font-size: 30px;
-    font-family: optimized; /* SentyTEA-BAsic */
+    /*font-family: optimized;*/ /* SentyTEA-BAsic */
 }
 
 main #frame span.est_en {
     font-size: 30px;
     font-family: cursive;
-    font-style: italic;
+    /*font-style: italic;*/
 }
 
+/* Button –––––––––––––––––––––––––––––––––––––––––––––––––––––––– */
+
 main #func-buttons {
+    font-family: ;
     font-size: 20px;
-    width: 320px;
-    margin: 40px auto;
+    width: 400px;
+    margin: 50px auto;
 }
 
 main #func-buttons ul li {
@@ -100,57 +112,74 @@ main #func-buttons ul li {
 }
 
 main #func-buttons ul li a {
-    width: 40px;
+    width: 120px;
     height: 40px;
     display: block;
-    /*background: transparent no-repeat;*/
-    /*text-indent: -9999px;*/
     margin: 0 5px;
 }
 
 main #func-buttons li a.link {
-    margin-right: 50px;
-    background: url('../image/link.png') no-repeat;
-}
-main #func-buttons li a.link:hover {
-    margin-right: 50px;
-    background: url('../image/link-hover.png') no-repeat;
+    margin-right: 25px;
 }
 
 main #func-buttons li a.unlink {
-    margin-left: 50px;
-    background: url('../image/unlink.png') no-repeat;
-}
-main #func-buttons li a.unlink:hover {
-    margin-left: 50px;
-    background: url('../image/unlink-hover.png') no-repeat;
+    margin-left: 25px;
 }
 
+/*comes from https://github.com/sixrevisions/semi-transparent-buttons/blob/master*/
 .semi-transparent-button {
-  display: block;
-  box-sizing: border-box;
-  margin: 0 auto;
-  padding: 8px;
-  width: 80%;
-  max-width: 200px;
-  background: #fff; /* fallback color for old browsers */
-  background: rgba(255, 255, 255, 0.5);
-  border-radius: 8px;
-  color: #fff;
-  text-align: center;
-  text-decoration: none;
-  letter-spacing: 1px;
-  transition: all 0.3s ease-out;
+    display: block;
+    box-sizing: border-box;
+    margin: 0 auto;
+    padding: 8px;
+    width: 80%;
+    max-width: 200px;
+    background: #fff; /* fallback color for old browsers */
+    background: rgba(230, 233, 237, 0.3);
+    border-radius: 8px;
+    color: #fff;
+    text-align: center;
+    text-decoration: none;
+    letter-spacing: 1px;
+    transition: all 0.3s ease-out;
 }
 .semi-transparent-button:hover,
 .semi-transparent-button:focus,
 .semi-transparent-button:active {
-  background: #fff;
-  color: #000;
-  transition: all 0.5s ease-in;
+    background-color: #E6E9ED;
+    color: #000;
+    transition: all 0.5s ease-in;
 }
 .semi-transparent:focus {
-  outline: none;
+    outline: none;
+}
+
+.with-border {
+    border: 1px solid rgba(255, 255, 255, 0.35);
+}
+
+/* Icon –––––––––––––––––––––––––––––––––––––––––––––––––––––––– */
+
+.icon {
+    font-family: 'icomoon';
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    line-height: 1;
+
+    /* Better Font Rendering =========== */
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-link:before {
+    content: "\e600";
+}
+
+.icon-unlink:before {
+    content: "\e601";
 }
 
 footer {
@@ -183,5 +212,24 @@ footer {
 
 .video-background video {
     min-height: 100%;
-    min-width:100%;
+    min-width: 100%;
+}
+
+/* Background */
+#bg {
+  position: fixed; 
+  top: -50%; 
+  left: -50%; 
+  width: 200%; 
+  height: 200%;
+}
+#bg img {
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+  right: 0; 
+  bottom: 0; 
+  margin: auto; 
+  min-width: 50%;
+  min-height: 50%;
 }

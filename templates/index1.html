@@ -27,32 +27,35 @@
     </style>
 </head>
 
-<body data-vide-bg="" style="position: relative;">
-    <div style="position: absolute; z-index: -1; top: 0px; left: 0px; bottom: 0px; right: 0px; overflow: hidden; -webkit-background-size: cover; background-size: cover; background-position: 50% 50%; background-repeat: no-repeat;">
-        <video autoplay loop style="visibility: visible; margin: auto; position: absolute; z-index: -1; top: 50%; left: 50%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%); width: 1282px; height: auto;">
-            <source src="/static/video/matt_devir--one_minute_drive.mp4" type="video/mp4">
+<body data-vide-bg="../static/image/smaller" style="position: relative;">
+    <div style="position: absolute; z-index: -1; top: 0px; left: 0px; bottom: 0px; right: 0px; overflow: hidden; -webkit-background-size: cover; background-size: cover; background-image: url(../static/image/smaller.jpg); background-position: 50% 50%; background-repeat: no-repeat;">
+        <video autoplay loop style="visibility: visible; margin: 0; position: absolute; z-index: -1; top: 50%; left: 50%; -webkit-transform: translate(-50%, -50%); transform: translate(-50%, -50%); width: 1440px; height: auto;">
+            <source src="/static/video/one_minute_drive_web480p.mp4" type="video/mp4">
         </video>
+<!--         <div id="bg">
+            <img src="../static/image/smaller.jpg" alt="">
+        </div> -->
     </div>
     <div id="outer-wrapper">
         <main>
             <div id="frame"><h1>分享墙外的世界</h1>
-                    <span class="est">同步</span><span class="est_en">Instagram </span><span class="est">照片到豆瓣广播</span>
+                    <span class="est">同步</span><span class="est_en">Instagram</span><span class="est">照片到豆瓣广播</span>
             </div>
             <div id="func-buttons">
                 <ul>
                     <li>
-                        <a href="/auth/douban" class="semi-transparent-button">Link</a>
+                        <a href="/auth/douban" class="link semi-transparent-button"><span class="icon icon-link"></span> Link</a>
                     </li>
                     <li>
-                        <a href="#" onclick="if(confirm('Are you sure? ')) location.href='{{ unlink }}' " class="semi-transparent-button">Unlink</a>
+                        <a href="#" onclick="if(confirm('Are you sure? ')) location.href='{{ unlink }}' " class="unlink semi-transparent-button"><span class="icon icon-unlink"></span> Unlink</a>
                     </li>
                 </ul>
             </div>
         </main>
     </div>
-    <script src="/static/js/jquery.min.js"></script>
-    <script src="/static/js/jquery.vide.min.js"></script>
-    <script type="text/javascript">
+    <script src="/static/js/jquery.min.js" async></script>
+    <script src="/static/js/jquery.vide.min.js" async></script>
+    <script type="text/javascript" async>
         (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
         (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
         m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
