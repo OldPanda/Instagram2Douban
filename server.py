@@ -99,13 +99,13 @@ class UnlinkHandler(InstagramOAuth2Mixin, tornado.web.RequestHandler):
             response_type='code'
         )
 
-
+'''
 class AboutHandler(tornado.web.RequestHandler):
     def get(self):
         self.render("about.html",
                     home=False,
                     about=True)
-
+'''
 
 class NotfoundHandler(tornado.web.RequestHandler):
     def get(self):
@@ -124,7 +124,7 @@ class Application(tornado.web.Application):
             (r"/auth/douban", DoubanAuthHandler),
             (r"/auth/instagram", InstagramAuthHandler),
             (r"/unlink", UnlinkHandler),
-            (r"/about", AboutHandler),
+            # (r"/about", AboutHandler),
             (r"/404", NotfoundHandler),
             (r".*", NowhereHandler)
             ]
