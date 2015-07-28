@@ -8,8 +8,8 @@
 }
 
 @font-face {
-    font-family: 'SentyTEA-Basic';
-    src: url('../font/SentyTEA-Basic.ttf') format('truetype');
+    font-family: 'optimized';
+    src: url('../font/optimized.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -30,7 +30,7 @@ html {
     background-size: cover;
     background-color: #d8dcb9;
 }
-    
+
 body {
     text-align: center;
     font-family: 'MuseoSans900', 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -64,7 +64,7 @@ main {
 }
 
 main #frame {
-    font-family: 'SentyTEA-Basic';
+    font-family: 'optimized'; /* 'SentyTEA-Basic' */
     height:  125px;
     background: transparent no-repeat center bottom;
     margin: 0 auto;
@@ -75,14 +75,22 @@ main #frame {
 
 main #frame h1 {
     padding-top: 29px;
-    height: 100px;  /* just modified here */
+    height: 60px;  /* just modified here */
 }
 
-main #frame p.est {
+main #frame span.est {
     font-size: 30px;
+    font-family: optimized; /* SentyTEA-BAsic */
+}
+
+main #frame span.est_en {
+    font-size: 30px;
+    font-family: cursive;
+    font-style: italic;
 }
 
 main #func-buttons {
+    font-size: 20px;
     width: 320px;
     margin: 40px auto;
 }
@@ -95,8 +103,8 @@ main #func-buttons ul li a {
     width: 40px;
     height: 40px;
     display: block;
-    background: transparent no-repeat;
-    text-indent: -9999px;
+    /*background: transparent no-repeat;*/
+    /*text-indent: -9999px;*/
     margin: 0 5px;
 }
 
@@ -118,6 +126,32 @@ main #func-buttons li a.unlink:hover {
     background: url('../image/unlink-hover.png') no-repeat;
 }
 
+.semi-transparent-button {
+  display: block;
+  box-sizing: border-box;
+  margin: 0 auto;
+  padding: 8px;
+  width: 80%;
+  max-width: 200px;
+  background: #fff; /* fallback color for old browsers */
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  letter-spacing: 1px;
+  transition: all 0.3s ease-out;
+}
+.semi-transparent-button:hover,
+.semi-transparent-button:focus,
+.semi-transparent-button:active {
+  background: #fff;
+  color: #000;
+  transition: all 0.5s ease-in;
+}
+.semi-transparent:focus {
+  outline: none;
+}
 
 footer {
     position: fixed;
@@ -148,6 +182,6 @@ footer {
 }
 
 .video-background video {
-    min-height: 100%; 
-    min-width:100%; 
+    min-height: 100%;
+    min-width:100%;
 }
