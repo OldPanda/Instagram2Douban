@@ -15,7 +15,7 @@
 /* For symbols */
 @font-face {
     font-family: 'icomoon';
-    src: url(../font/icoMoon.ttf?-u1sm2p) format('truetype');
+    src: url(../font/icoMoon.ttf) format('truetype');
     font-weight: normal;
     font-style: normal;
 }
