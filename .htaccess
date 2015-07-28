@@ -1,4 +1,3 @@
-<IfModule mod_expires.c>
 # Enable expirations
 ExpiresActive On 
 # Default directive
@@ -16,4 +15,3 @@ ExpiresByType video/mp4 "access plus 1 month"
 ExpiresByType text/css "access plus 1 month"
 # Javascript
 ExpiresByType application/javascript "access plus 1 year"
-</IfModule>
