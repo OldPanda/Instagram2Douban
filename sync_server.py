@@ -47,12 +47,11 @@ def fetch_pic_and_upload(user, users):
         # no new picture
         return
 
-
     for pic_info in reversed(inst_response["data"]):
         pic_url = pic_info["images"]["standard_resolution"]["url"]
-        caption = pic_info["caption"]
-        pic_caption = caption["text"] + "  via Ins2Douban" if caption \
-            else "via Ins2Douban"
+        caption = pic_info["caption"]["text"] + " " + pic_info["link"] if pic_info["caption"] \
+            else pic_info["link"]
+        pic_caption = caption + "  (via Ins2Douban)"
         is_refreshed, success = upload_pic_to_douban(user,
                                             pic_url,
                                             pic_caption,
@@ -65,6 +64,7 @@ def fetch_pic_and_upload(user, users):
         if success:
             user["last_sync_time"] = str(int(time.time()))
             users.save(user)
+
 
 def upload_pic_to_douban(user, pic_url, caption, users):
     """Upload picture to Douban from url directly
@@ -94,6 +94,7 @@ def upload_pic_to_douban(user, pic_url, caption, users):
                     user=user["douban"]["uid"]
                 ))
             return False, True # indicate if a new access token is generated
+        '''
         else:
             # access token expires
             logging.warning("Douban user: " + user["douban"]["uid"] + " token expired")
@@ -106,8 +107,9 @@ def upload_pic_to_douban(user, pic_url, caption, users):
                 return True, True
             else:
                 return False, False
+        '''
     except:
-        logging.error(usr["douban"]["uid"] + "uploaded picture failed: " + pic_url + " open error")
+        logging.error(user["douban"]["uid"] + " uploaded picture failed: " + pic_url + " open error")
         return False, False
 
 

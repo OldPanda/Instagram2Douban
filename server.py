@@ -187,8 +187,7 @@ def del_user(db, user_info):
                 inst=user["instagram"]["username"]
             )
         )
-        db["users"].remove({"instagram.id": inst_id})
-    
+        db["users"].remove({"instagram.id": inst_id})   
 
 
 def main():
@@ -201,7 +200,7 @@ def main():
     logging.info("MongoDB connection succeed")
     db = conn["insdouban"]
     tornado.options.parse_command_line()
-    config = yaml.load(file("config.yaml", "r"))
+    config = yaml.load(file("config.yml", "r"))
     if options.test:
         conf = config["TEST"]
     else:
