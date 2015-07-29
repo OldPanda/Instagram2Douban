@@ -94,7 +94,6 @@ def upload_pic_to_douban(user, pic_url, caption, users):
                     user=user["douban"]["uid"]
                 ))
             return False, True # indicate if a new access token is generated
-        '''
         else:
             # access token expires
             logging.warning("Douban user: " + user["douban"]["uid"] + " token expired")
@@ -107,7 +106,6 @@ def upload_pic_to_douban(user, pic_url, caption, users):
                 return True, True
             else:
                 return False, False
-        '''
     except:
         logging.error(user["douban"]["uid"] + " uploaded picture failed: " + pic_url + " open error")
         return False, False

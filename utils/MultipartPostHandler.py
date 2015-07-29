@@ -80,7 +80,7 @@ class MultipartPostHandler(urllib2.BaseHandler):
             v_vars = []
             try:
                 for (key, value) in data.items():
-                    if is_url(value):
+                    if key == "image":
                         v_files.append((key, urllib2.urlopen(value)))
                     else:
                         v_vars.append((key, value))
