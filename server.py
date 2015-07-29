@@ -124,7 +124,6 @@ class Application(tornado.web.Application):
             (r"/auth/douban", DoubanAuthHandler),
             (r"/auth/instagram", InstagramAuthHandler),
             (r"/unlink", UnlinkHandler),
-            # (r"/about", AboutHandler),
             (r"/404", NotfoundHandler),
             (r".*", NowhereHandler)
             ]
