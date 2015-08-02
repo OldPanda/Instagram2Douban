@@ -21,6 +21,9 @@ def fetch_pic_and_upload(user, users):
         user (dict): user information
         users (MongoDB collection): users info database
     """
+    if not user["is_sync"]:
+        return
+
     instagram_info = user["instagram"]
     access_token = instagram_info["access_token"]
     min_timestamp = user["last_sync_time"]
