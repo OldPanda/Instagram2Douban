@@ -37,7 +37,7 @@ def oauth_data_to_doc(data):
         except:
             continue
     new_user["last_sync_time"] = str(int(time.time()))
-
+    new_user["is_sync"] = True
     return new_user
 
 def imgs_to_list(data):
